@@ -13,7 +13,6 @@ An advanced, production-ready Retrieval-Augmented Generation (RAG) assistant bui
 * **Relational Error Tracking:** Features a built-in local SQLite pipeline to log hallucination events or user-flagged errors with contextual metadata snapshotting for admin evaluation.
 
 ---
-
 ## 🏗️ Architecture Overview
 
 The system architecture cleanly decouples unstructured document processing from tabular mathematical execution:
@@ -61,3 +60,61 @@ The system architecture cleanly decouples unstructured document processing from 
                      v                               v
          Display Response to User       Log to SQLite (app_logs.db)
                                         Show Friendly Catch Warning
+### Part 3: Technology Stack & Setup
+```markdown
+## 🛠️ Technology Stack
+
+* **Frontend Interface:** Streamlit
+* **Orchestration Framework:** LangChain / LangChain Core
+* **Inference Engine:** ChatGroq (`qwen/qwen3-32b` at `temperature=0.0`)
+* **Vector Database:** ChromaDB (`all_documents` collection)
+* **Embedding Pipeline:** HuggingFace Embeddings (`sentence-transformers/all-MiniLM-L6-v2`)
+* **Relational Logging:** SQLite3
+* **Data Management:** Pandas, OpenPyXL (Excel parsing)
+
+---
+
+### 1. Prerequisites
+Ensure you have **Python 3.9** or higher installed on your local environment.
+
+### 2. Environment Configuration
+Create a `.env` file in the root directory of your project and include your Groq API token:
+
+```env
+GROQ_API_KEY=gsk_your_actual_groq_api_key_here
+
+### Part 4: Installation & Running Rules
+```markdown
+### 3. Installation
+Install the required system dependencies using pip:
+
+```bash
+pip install streamlit pandas docx langchain langchain-chroma langchain-community langchain-groq sentence-transformers python-dotenv openpyxl pypdf
+
+
+
+├── .env
+├── app.py                     # Main application script
+├── app_logs.db                # Auto-generated SQLite logs
+├── chroma_db/                 # Directory containing persistent vector records
+
+
+
+
+Running the Application
+Execute the Streamlit startup workflow from your terminal interface:
+
+Bash
+streamlit run app.py
+
+
+
+User Workflow Instruction:
+Open the sidebar pane to verify database status.
+
+Click Scan & Ingest Directory to parse structural blueprints and document chunks into ChromaDB.
+
+Type natural language or statistical queries into the main chat window.
+
+If the model generates an error or missing detail, click ⚠️ Report Wrong Answer beneath the message bubble to log it permanently for administration review.
+└── data/                      # Local data folder where source files are placed
